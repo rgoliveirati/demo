@@ -1,3 +1,5 @@
+pip install transformers
+
 import random
 import re
 from transformers import GPT2LMHeadModel, GPT2Tokenizer
