@@ -110,37 +110,31 @@ psychobabble = [
 ]
 
 
-def eliza_response(input_text, chat_history):
+def eliza_response(input_text):
     for pattern, responses in psychobabble:
         match = re.match(pattern, input_text.rstrip(".!"))
         if match:
             response = random.choice(responses)
             return response.format(*match.groups())
-    return generate_response(input_text, chat_history)
+    return generate_response(input_text)
 
-def generate_response(input_text, chat_history):
-    chat_history.append("You: " + input_text)
-    input_text = "\n".join(chat_history[-5:])  # Consider the last 5 lines as context
+def generate_response(input_text):
     input_ids = tokenizer.encode(input_text, return_tensors="pt")
     with torch.no_grad():
         output = model.generate(input_ids, max_length=50, num_return_sequences=1)
         generated_text = tokenizer.decode(output[0], skip_special_tokens=True)
-        chat_history.append("Evolved Eliza: " + generated_text)
         return generated_text
 
 def main():
     st.title("Evolved Eliza 1966 Chatbot with GPT-2")
     st.write("Hello, I'm the evolved Eliza 1966! How can I help you today?")
 
-    chat_history = []
-
-    while True:
-        user_input = st.text_input("You: ")
-        if user_input:
-            response = eliza_response(user_input, chat_history)
-            st.text("Evolved Eliza: " + response)
-            chat_history.append("You: " + user_input)
-            chat_history.append("Evolved Eliza: " + response)
+    user_input = st.text_input("You: ")
+    if user_input:
+        response = eliza_response(user_input)
+        st.text("Evolved Eliza: " + response)
+        
+        
 
 if __name__ == "__main__":
     main()
