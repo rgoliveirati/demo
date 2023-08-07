@@ -2,8 +2,9 @@ import random
 import re
 from transformers import GPT2LMHeadModel, GPT2Tokenizer
 import streamlit as st
+import torch
 
-model_name = "gpt2-medium"  # You can also use "gpt2-medium" for a larger model
+model_name = "gpt2"  # You can also use "gpt2-medium" for a larger model
 tokenizer = GPT2Tokenizer.from_pretrained(model_name)
 model = GPT2LMHeadModel.from_pretrained(model_name)
 
