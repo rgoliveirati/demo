@@ -1,4 +1,4 @@
-pip install transformers
+!pip install transformers
 
 import random
 import re
